@@ -131,7 +131,10 @@ def productPage(): #To extract all attributes from product API page
         page = session.post(url, json=json.loads(data), headers = headers)
         cruise_data = page.json()
         prod_data = cruise_data['data']['property']
-        ZIILOWID = prod_data['zpid']
+        try:
+            ZIILOWID = prod_data['zpid']
+        except:
+            ZIILOWID = '--'
         PROPERTY_URL = "https://www.zillow.com" + prod_data.get('hdpUrl','N/A')
         LIVING_AREA = prod_data.get('livingArea','N/A')
         BEDROOMS = prod_data.get('bedrooms','N/A')
