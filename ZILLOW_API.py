@@ -1,6 +1,6 @@
 import pandas as pd
 import math, os, re, datetime, time
-#from google.colab import files
+from google.colab import files
 import requests, json
 from openpyxl import load_workbook
 
@@ -248,4 +248,4 @@ if not os.path.isfile('ZILLOW_DATA_'+now_time+'.csv'):
 else:                       # else it exists so append without writing the header
 
     df.to_csv('ZILLOW_DATA_'+now_time+'.csv', mode='a', header=False,index=False)
-#files.download('ZILLOW_DATA_'+now_time+'.csv')
+files.download('ZILLOW_DATA_'+now_time+'.csv')
