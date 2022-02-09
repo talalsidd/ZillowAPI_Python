@@ -4,7 +4,7 @@ import math, os, re, datetime, time
 import requests, json
 from openpyxl import load_workbook
 
-cat_urls = ["https://www.zillow.com/search/GetSearchPageState.htm?searchQueryState=%7B%22pagination%22%3A%7B%22currentPage%22%3A2%7D%2C%22mapBounds%22%3A%7B%22west%22%3A-82.84915438294986%2C%22east%22%3A-82.00320711732486%2C%22south%22%3A27.686787911586666%2C%22north%22%3A28.28101903119794%7D%2C%22isMapVisible%22%3Afalse%2C%22filterState%22%3A%7B%22isAllHomes%22%3A%7B%22value%22%3Atrue%7D%2C%22isForRent%22%3A%7B%22value%22%3Atrue%7D%2C%22isForSaleByAgent%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleByOwner%22%3A%7B%22value%22%3Afalse%7D%2C%22isNewConstruction%22%3A%7B%22value%22%3Afalse%7D%2C%22isComingSoon%22%3A%7B%22value%22%3Afalse%7D%2C%22isAuction%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleForeclosure%22%3A%7B%22value%22%3Afalse%7D%2C%22monthlyPayment%22%3A%7B%22max%22%3A2100%7D%2C%22price%22%3A%7B%22max%22%3A584502%7D%7D%2C%22isListVisible%22%3Atrue%7D&wants={%22cat1%22:[%22listResults%22]}&requestId=42","https://www.zillow.com/search/GetSearchPageState.htm?searchQueryState=%7B%22pagination%22%3A%7B%22currentPage%22%3A2%7D%2C%22mapBounds%22%3A%7B%22west%22%3A-82.84915438294986%2C%22east%22%3A-82.00320711732486%2C%22south%22%3A27.686787911586666%2C%22north%22%3A28.28101903119794%7D%2C%22isMapVisible%22%3Afalse%2C%22filterState%22%3A%7B%22isAllHomes%22%3A%7B%22value%22%3Atrue%7D%2C%22isForRent%22%3A%7B%22value%22%3Atrue%7D%2C%22isForSaleByAgent%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleByOwner%22%3A%7B%22value%22%3Afalse%7D%2C%22isNewConstruction%22%3A%7B%22value%22%3Afalse%7D%2C%22isComingSoon%22%3A%7B%22value%22%3Afalse%7D%2C%22isAuction%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleForeclosure%22%3A%7B%22value%22%3Afalse%7D%2C%22monthlyPayment%22%3A%7B%22min%22%3A2100%2C%22max%22%3A2550%7D%2C%22price%22%3A%7B%22min%22%3A584502%2C%22max%22%3A709752%7D%7D%2C%22isListVisible%22%3Atrue%7D&wants={%22cat1%22:[%22listResults%22]}&requestId=48","https://www.zillow.com/search/GetSearchPageState.htm?searchQueryState=%7B%22pagination%22%3A%7B%22currentPage%22%3A3%7D%2C%22mapBounds%22%3A%7B%22west%22%3A-82.84915438294986%2C%22east%22%3A-82.00320711732486%2C%22south%22%3A27.686787911586666%2C%22north%22%3A28.28101903119794%7D%2C%22isMapVisible%22%3Afalse%2C%22filterState%22%3A%7B%22isAllHomes%22%3A%7B%22value%22%3Atrue%7D%2C%22isForRent%22%3A%7B%22value%22%3Atrue%7D%2C%22isForSaleByAgent%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleByOwner%22%3A%7B%22value%22%3Afalse%7D%2C%22isNewConstruction%22%3A%7B%22value%22%3Afalse%7D%2C%22isComingSoon%22%3A%7B%22value%22%3Afalse%7D%2C%22isAuction%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleForeclosure%22%3A%7B%22value%22%3Afalse%7D%2C%22monthlyPayment%22%3A%7B%22min%22%3A2550%7D%2C%22price%22%3A%7B%22min%22%3A709752%7D%7D%2C%22isListVisible%22%3Atrue%7D&wants={%22cat1%22:[%22listResults%22]}&requestId=52"]
+cat_urls = ["https://www.zillow.com/search/GetSearchPageState.htm?searchQueryState=%7B%22pagination%22%3A%7B%22currentPage%22%3A2%7D%2C%22mapBounds%22%3A%7B%22west%22%3A-74.0797901339829%2C%22east%22%3A-73.55259893462062%2C%22south%22%3A40.6412468820408%2C%22north%22%3A40.77917657638982%7D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22isForSaleByAgent%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleByOwner%22%3A%7B%22value%22%3Afalse%7D%2C%22isNewConstruction%22%3A%7B%22value%22%3Afalse%7D%2C%22isForSaleForeclosure%22%3A%7B%22value%22%3Afalse%7D%2C%22isComingSoon%22%3A%7B%22value%22%3Afalse%7D%2C%22isAuction%22%3A%7B%22value%22%3Afalse%7D%2C%22isForRent%22%3A%7B%22value%22%3Atrue%7D%2C%22isAllHomes%22%3A%7B%22value%22%3Atrue%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A11%7D&wants={%22cat1%22:[%22listResults%22,%22mapResults%22]}&requestId=4"]
 jsondata = ''
 buildingkey = []
 purls = []
@@ -242,10 +242,10 @@ df.drop_duplicates(keep=False, inplace=True)
 
 
 # if file does not exist write header 
-if not os.path.isfile('ZILLOW_TAMPA_DATA.csv'):
-    df.to_csv('ZILLOW_TAMPA_DATA.csv', index=False)
+if not os.path.isfile('ZILLOW_DATA.csv'):
+    df.to_csv('ZILLOW_DATA.csv', index=False)
 
 else:                       # else it exists so append without writing the header
 
-    df.to_csv('ZILLOW_TAMPA_DATA.csv', mode='a', header=False,index=False)
-#files.download('ZILLOW_TAMPA_DATA_'+now_time+'.csv')
+    df.to_csv('ZILLOW_DATA.csv', mode='a', header=False,index=False)
+#files.download('ZILLOW_DATA_'+now_time+'.csv')
