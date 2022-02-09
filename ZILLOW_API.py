@@ -236,16 +236,16 @@ for id in alldata: #Extracting from product data page
 #Below is the pandas' part as the data array 'proddata' has been put into a dataframe with column names
 
 df = pd.DataFrame(proddata,columns =["ZILLOW ID","PROPERTY URL","LIVING AREA","BEDROOMS","BATHROOMS","FLOORS","YEAR BUILT","CONDITION","CITY","STATE","ZIPCODE","STREET ADDRESS","ADDRESS","VIEW","LOCATION","MONTHLY HOUSING PRICE","RENT","PROPERTY TYPE","CONSTRUCTION","TAX DATE","TAX PAID","HOUSE VALUE"])
-
+now_time = datetime.datetime.now().strftime("%d-%m-%Y")
 #remove duplicate entries
 df.drop_duplicates(keep=False, inplace=True)
 
 
 # if file does not exist write header 
-if not os.path.isfile('ZILLOW_DATA.csv'):
-    df.to_csv('ZILLOW_DATA.csv', index=False)
+if not os.path.isfile('ZILLOW_DATA_'+now_time+'.csv'):
+    df.to_csv('ZILLOW_DATA_'+now_time+'.csv', index=False)
 
 else:                       # else it exists so append without writing the header
 
-    df.to_csv('ZILLOW_DATA.csv', mode='a', header=False,index=False)
+    df.to_csv('ZILLOW_DATA_'+now_time+'.csv', mode='a', header=False,index=False)
 #files.download('ZILLOW_DATA_'+now_time+'.csv')
