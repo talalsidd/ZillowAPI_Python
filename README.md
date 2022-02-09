@@ -87,7 +87,7 @@ This will lead to the final part of Pandas.
 PUTTING DATA FROM ARRAY TO PANDAS DATAFRAME:
 Now all the data has been stored in the array 'proddata'. But we want it in the excel/csv file for our use. For this I used Pandas.
 
-![README9](https://user-images.githubusercontent.com/35397160/153235811-ed8182c0-fb9f-4725-bbfb-6416a5e2ce81.JPG)
+![pandas](https://user-images.githubusercontent.com/35397160/153293053-9ad97272-20ab-4f44-a3fc-1a5df077d74b.JPG)
 
 You can see in the Image that I created a dataframe 'df' using pandas 'pd' and add the array into that dataframe and name the columns against the array variables. These will be the headers. Make sure to name the columns in accordance with array attributes.
 In the 2nd line, It will create a variable for current date using datetime library of python which will later be use in Filename for avoiding duplication on day to day scraping.
